@@ -3,10 +3,13 @@
 
 class QuadTree{
 private:
-    static const char *img_path;
+    static unsigned char *img;
+    static int original_width;
+    static int original_height;
+    static unsigned char *compressed_img;
     static int error_measurement_method;
     static float threshold;
-    static int min_size;
+    static int min_block_size;
     static int node_count;
     // static float compression_target; // [BONUS]
 
@@ -15,22 +18,28 @@ private:
     int y_idx;
     int width;
     int height;
+    static int channel;
     int block_size;
     float error_result;
     bool is_leaf;
-    QuadTree* children;
+    QuadTree* children[4];
 public:
-    QuadTree();
     QuadTree(int depth, int x_idx, int y_idx, int width, int height);
     
-    void compressImage(const char* saved_img_path);
+    void compressImage();
+    void saveCompressedImage(const char* path);
     // void generateGIF(const char* saved_img_path); // [BONUS]
 
     float variance();
+    float channelVariance(int rgb);
+    float channelAverage(int rgb);
+
     float MAD();
     float MPD();
     float entropy();
     // float SSIM(); // [BONUS]
+
+    void setStatic(unsigned char* img, unsigned char* compressed_img, int error_measurement_method, float threshold, int min_size, int channel);
 };
 
 #endif
