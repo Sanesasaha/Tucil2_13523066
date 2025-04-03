@@ -35,8 +35,14 @@ public:
     float channelAverage(int rgb);
 
     float MAD();
+    float channelMAD(int rgb);
+
     float MPD();
+    float channelMPD(int rgb);
+
     float entropy();
+    float channelEntropy(int rgb);
+
     // float SSIM(); // [BONUS]
 
     void setStatic(unsigned char* img, unsigned char* compressed_img, int error_measurement_method, float threshold, int min_size, int channel);
