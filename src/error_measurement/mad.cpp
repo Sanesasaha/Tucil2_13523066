@@ -14,7 +14,7 @@ float QuadTree::channelMAD(int rgb){
     for(int x=x_idx;x<x_idx+width;x++){
         for(int y=y_idx;y<y_idx+height;y++){
             pixel_index = (y * original_width + x) * channel;
-            result += (img[pixel_index + rgb] - avg);
+            result += abs(img[pixel_index + rgb] - avg);
         }
     }
     result = result/block_size;
