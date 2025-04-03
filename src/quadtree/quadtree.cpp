@@ -50,6 +50,21 @@ void QuadTree::compressImage(){
         if(error_result<=threshold){
             is_leaf = true;
         }
+    } else if(error_measurement_method==2){ // MAD
+        error_result = this->MAD();
+        if(error_result<=threshold){
+            is_leaf = true;
+        }
+    } else if(error_measurement_method==3){ // MPD
+        error_result = this->MPD();
+        if(error_result<=threshold){
+            is_leaf = true;
+        }
+    } else if(error_measurement_method==4){ // entropy
+        error_result = this->entropy();
+        if(error_result<=threshold){
+            is_leaf = true;
+        }
     }
 
     if(!is_leaf){ // DIVIDE
@@ -90,6 +105,10 @@ void QuadTree::compressImage(){
     }
 }
 
-void QuadTree::saveCompressedImage(const char* path){
-    stbi_write_jpg(path, width, height, channel, this->compressed_img, width * channel);
+void QuadTree::saveCompressedImageJPG(const char* path){
+    stbi_write_jpg(path, width, height, channel, this->compressed_img, 75);
+}
+
+void QuadTree::saveCompressedImagePNG(const char* path){
+    stbi_write_png(path, width, height, channel, this->compressed_img, width * channel);
 }

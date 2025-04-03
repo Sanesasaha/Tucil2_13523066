@@ -27,7 +27,8 @@ public:
     QuadTree(int depth, int x_idx, int y_idx, int width, int height);
     
     void compressImage();
-    void saveCompressedImage(const char* path);
+    void saveCompressedImageJPG(const char* path);
+    void saveCompressedImagePNG(const char* path);
     // void generateGIF(const char* saved_img_path); // [BONUS]
 
     float variance();
