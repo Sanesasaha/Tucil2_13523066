@@ -11,6 +11,7 @@ private:
     static float threshold;
     static int min_block_size;
     static int node_count;
+    static int max_depth;
     // static float compression_target; // [BONUS]
 
     int depth;
@@ -47,6 +48,9 @@ public:
     // float SSIM(); // [BONUS]
 
     void setStatic(unsigned char* img, unsigned char* compressed_img, int error_measurement_method, float threshold, int min_size, int channel);
+
+    int getMaxDepth();
+    int getNodeCount();
 };
 
 #endif

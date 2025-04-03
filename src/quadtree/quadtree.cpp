@@ -11,6 +11,7 @@ int QuadTree::error_measurement_method = -1;
 float QuadTree::threshold = -1;
 int QuadTree::min_block_size = -1;
 int QuadTree::node_count = -1;
+int QuadTree::max_depth = -1;
 int QuadTree::channel = -1;
 
 QuadTree::QuadTree(int depth, int x_idx, int y_idx, int width, int height){
@@ -28,6 +29,10 @@ QuadTree::QuadTree(int depth, int x_idx, int y_idx, int width, int height){
     }
 
     node_count++;
+
+    if(this->depth > max_depth){
+        max_depth = this->depth;
+    }
 }
 
 void QuadTree::setStatic(unsigned char* img, unsigned char* compressed_img, int error_measurement_method, float threshold, int min_size, int channel){
@@ -39,6 +44,7 @@ void QuadTree::setStatic(unsigned char* img, unsigned char* compressed_img, int 
     this->threshold = threshold;
     this->min_block_size = min_size;
     this->node_count = 1;
+    this->max_depth = 1;
     this->channel = channel;
 }
 
@@ -111,4 +117,11 @@ void QuadTree::saveCompressedImageJPG(const char* path){
 
 void QuadTree::saveCompressedImagePNG(const char* path){
     stbi_write_png(path, width, height, channel, this->compressed_img, width * channel);
+}
+
+int QuadTree::getMaxDepth(){
+    return this->max_depth;
+}
+int QuadTree::getNodeCount(){
+    return this->node_count;
 }
