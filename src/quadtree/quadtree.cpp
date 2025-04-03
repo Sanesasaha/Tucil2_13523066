@@ -33,6 +33,10 @@ QuadTree::QuadTree(int depth, int x_idx, int y_idx, int width, int height){
     if(this->depth > max_depth){
         max_depth = this->depth;
     }
+
+    this->r_avg = -1;
+    this->g_avg = -1;
+    this->b_avg = -1;
 }
 
 void QuadTree::setStatic(unsigned char* img, unsigned char* compressed_img, int error_measurement_method, float threshold, int min_size, int channel){
@@ -94,9 +98,9 @@ void QuadTree::compressImage(){
             if(children[i] != nullptr) children[i]->compressImage();
         }
     } else{ // CONQUER
-        float r_avg = this->channelAverage(0);
-        float g_avg = this->channelAverage(1);
-        float b_avg = this->channelAverage(2);
+        r_avg = this->channelAverage(0);
+        g_avg = this->channelAverage(1);
+        b_avg = this->channelAverage(2);
         
         
         int pixel_index;

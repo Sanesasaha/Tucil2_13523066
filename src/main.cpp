@@ -64,7 +64,7 @@ int main(){
         auto exec_time = duration_cast<milliseconds>(end-start);
 
         qt.saveCompressedImageJPG(img_output_path);
-
+        
         cout << endl;
         cout << "Execution Time (ms)   : " << exec_time.count() << endl;
         cout << "Input File Size       : " << input_file_size << endl;
@@ -73,6 +73,8 @@ int main(){
         cout << "Tree Depth            : " << qt.getMaxDepth() << endl;
         cout << "Node Count            : " << qt.getNodeCount() << endl;
         
+        qt.generateGIF(img_input_path, img_output_path, "bin/img_output/bocchi.gif");
+
         cout << endl << "Continue?" << endl;
         cout << "(Input Y to continue, anything else to quit)" << endl;
         getline(cin, cont);

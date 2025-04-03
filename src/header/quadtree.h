@@ -24,13 +24,20 @@ private:
     float error_result;
     bool is_leaf;
     QuadTree* children[4];
+
+    float r_avg;
+    float g_avg;
+    float b_avg;
 public:
     QuadTree(int depth, int x_idx, int y_idx, int width, int height);
     
     void compressImage();
     void saveCompressedImageJPG(const char* path);
     void saveCompressedImagePNG(const char* path);
-    // void generateGIF(const char* saved_img_path); // [BONUS]
+    
+    // Bonus GIF
+    void generateGIF(const char* img_input_path, const char* img_output_path,  const char* saved_gif_path);
+    void fillFrames();
 
     float variance();
     float channelVariance(int rgb);
