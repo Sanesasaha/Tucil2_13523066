@@ -7,17 +7,26 @@ using namespace std;
 
 // Menghitung entropy suatu channel R, G, B, dengan nilai int rgb berturut turut 0, 1, 2
 float QuadTree::channelEntropy(int rgb){
+    int count[256] = {0};
     float result = 0;
     
     int pixel_index;
+    // Banyak kemunculan nilai RGB tertentu
     for(int x=x_idx;x<x_idx+width;x++){
         for(int y=y_idx;y<y_idx+height;y++){
             pixel_index = (y * original_width + x) * channel;
-            // TODO
+            count[img[pixel_index + rgb]]++;
         }
     }
 
-    return result;
+    // Entropi
+    float probability;
+    for(int i=0;i<256;i++){
+        probability = count[i]/block_size;
+        result += (probability*log2(probability));
+    }
+
+    return -1*result;
 }
 
 float QuadTree::entropy(){
