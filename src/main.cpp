@@ -1,5 +1,4 @@
 #include <iostream>
-#include <stdlib.h>
 #include <string>
 #include <chrono>
 #include <fstream>
@@ -45,15 +44,47 @@ int main(){
 
         cout << "Error Measurement Method      : ";
         cin >> error_measurement_method;
-        
+        while(cin.fail()){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Harap masukkan angka dalam rentang 1-5" << endl;
+
+            cout << "Error Measurement Method      : ";
+            cin >> error_measurement_method;
+        }
+
         cout << "Threshold                     : ";
         cin >> threshold;
+        while(cin.fail()){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Harap masukkan angka dalam rentang yang valid" << endl;
+
+            cout << "Threshold                     : ";
+            cin >> threshold;
+        }
 
         cout << "Minimum Block Size            : ";
         cin >> min_block_size;
+        while(cin.fail()){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Harap masukkan angka dalam rentang yang valid" << endl;
+
+            cout << "Minimum Block Size            : ";
+            cin >> min_block_size;
+        }
 
         cout << "Compression Percentage Target : ";
         cin >> compression_pct;
+        while(cin.fail()){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Harap masukkan angka dalam rentang yang valid" << endl;
+
+            cout << "Compression Percentage Target : ";
+            cin >> compression_pct;
+        }
 
         cout << "Absolute Path to Result       : " << endl;
         cin.ignore();
@@ -64,6 +95,7 @@ int main(){
         getline(cin, gif_string);
         gif_path = gif_string.c_str();
 
+        cout << endl << "Generating image ..." << endl;
         // Compression
         img = stbi_load(img_input_path, &w, &h, &channels, 0);
         compressed_img = stbi_load(img_input_path, &w, &h, &channels, 0);
@@ -80,7 +112,9 @@ int main(){
         auto end = high_resolution_clock::now();
         auto exec_time = duration_cast<milliseconds>(end-start);
 
+        cout << "Saving image ..." << endl;
         qt.saveCompressedImageJPG(img_output_path);
+        cout << "Saving GIF ..." << endl;
         qt.generateGIF(img_output_path, gif_path);
         
         ifstream file(img_input_path, ios::binary | ios::ate);
