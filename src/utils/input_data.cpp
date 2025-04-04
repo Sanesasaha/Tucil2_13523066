@@ -6,12 +6,12 @@ using namespace std;
 
 #include "../header/stb_image.h"
 #include "../header/stb_image_write.h"
-#include "../header/gif.h"
-#include "input_data.hpp"
+#include "../header/gif_generator.h"
+#include "../header/input_data.hpp"
 
 bool validateImageFile(const char* filename){
-    regex windows_absolute_path("^[A-Za-z]:[\\/].*\.(jpg|jpeg|png)$");
-    regex linux_absolute_path("^/.*\.(jpg|jpeg|png)$");
+    regex windows_absolute_path("^[A-Za-z]:[\\/].*\\.(jpg|jpeg|png)$");
+    regex linux_absolute_path("^/.*\\.(jpg|jpeg|png)$");
 
     if(!(regex_match(filename, windows_absolute_path) || regex_match(filename, linux_absolute_path))){
         cout << "Format file tidak valid!" << endl;
@@ -20,8 +20,8 @@ bool validateImageFile(const char* filename){
 }
 
 bool validateGIFFile(const char* filename){
-    regex windows_absolute_path("^[A-Za-z]:[\\/].*\.gif$");
-    regex linux_absolute_path("^/.*\.gif$");
+    regex windows_absolute_path("^[A-Za-z]:[\\/].*\\.gif$");
+    regex linux_absolute_path("^/.*\\.gif$");
 
     if(!(regex_match(filename, windows_absolute_path) || regex_match(filename, linux_absolute_path))){
         cout << "Format file tidak valid!" << endl;
@@ -111,7 +111,7 @@ bool validateOutputPath(const char* input_filename, const char* filename){
     int w, h, channels;
     unsigned char* img = stbi_load(input_filename, &w, &h, &channels, 0);
     
-    regex path_png(".*\.png$");
+    regex path_png(".*\\.png$");
     if(regex_match(filename, path_png)){
         stbi_write_png(filename, w, h, channels, img, w*channels);
     } else{
@@ -130,21 +130,12 @@ bool validateGIFPath(const char* input_filename, const char* filename){
     if(!inputPathExist(input_filename)) return false;
     if(!validateGIFFile(filename)) return false;
 
-    int w, h, channels;
-    unsigned char* img = stbi_load(input_filename, &w, &h, &channels, 0);
-    
-    GifWriter gif = {};
-    if (!GifBegin(&gif, filename, w, h, 100)) {
-        cout << "Path GIF tidak valid!" << endl;
-        return false;
-    }
-
-    
-    return true;
+    return saveGIFTemplate(input_filename, filename);
 }
 
 bool InputData::validate(){
     bool isValid = true;
+    cout << endl;
     isValid = isValid && validateImageFile(img_input_path);
     isValid = isValid && inputPathExist(img_input_path);
     isValid = isValid && validateErrorMethod(error_measurement_method);
@@ -153,6 +144,6 @@ bool InputData::validate(){
     isValid = isValid && validateCompressionPct(compression_pct);
     isValid = isValid && validateOutputPath(img_input_path, img_output_path);
     isValid = isValid && validateGIFPath(img_input_path, img_output_path);
-
+    cout << endl;
     return isValid;
 }

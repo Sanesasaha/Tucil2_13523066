@@ -2,6 +2,7 @@
 #include "../header/stb_image.h"
 #include "../header/stb_image_write.h"
 #include "../header/gif.h"
+#include "../header/gif_generator.h"
 #include <cmath>
 #include <iostream>
 using namespace std;
@@ -59,4 +60,16 @@ void QuadTree::fillFrames(){
             }
         }
     }
+}
+
+bool saveGIFTemplate(const char* input_filename, const char* filename){
+    int w, h, channels;
+    unsigned char* img = stbi_load(input_filename, &w, &h, &channels, 0);
+    
+    GifWriter gif = {};
+    if (!GifBegin(&gif, filename, w, h, 100)) {
+        cout << "Path GIF tidak valid!" << endl;
+        return false;
+    }
+    return true;
 }
