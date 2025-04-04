@@ -53,6 +53,7 @@ void QuadTree::setStatic(unsigned char* img, unsigned char* compressed_img, int 
 }
 
 void QuadTree::compressImage(){
+    is_leaf = false;
     if(block_size<min_block_size){
         is_leaf = true;
     } else if(error_measurement_method==1){ // variance
@@ -77,7 +78,7 @@ void QuadTree::compressImage(){
         }
     } else if(error_measurement_method==5){ // entropy
         error_result = this->SSIM();
-        if(error_result<=threshold){
+        if(error_result>=threshold){
             is_leaf = true;
         }
     }

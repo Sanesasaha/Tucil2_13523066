@@ -20,6 +20,7 @@ int main(){
     int error_measurement_method;
     float threshold;
     int min_block_size;
+    float compression_pct;
     const char *img_output_path;
     string img_output_string;
 
@@ -35,28 +36,31 @@ int main(){
     unsigned char *compressed_img;
     bool run = true;
     string cont;
+    
     while(run){
         // TODO: VALIDATION
-        cout << "Absolute Path to Image  : " << endl;
+        cout << "Absolute Path to Image        : " << endl;
         getline(cin, img_input_string);
         img_input_path = img_input_string.c_str();
 
-        cout << "Error Measurement Method: ";
+        cout << "Error Measurement Method      : ";
         cin >> error_measurement_method;
         
-        cout << "Threshold               : ";
+        cout << "Threshold                     : ";
         cin >> threshold;
 
-        cout << "Minimum Block Size      : ";
+        cout << "Minimum Block Size            : ";
         cin >> min_block_size;
 
-        cout << "Absolute Path to Result : " << endl;
+        cout << "Compression Percentage Target : ";
+        cin >> compression_pct;
+
+        cout << "Absolute Path to Result       : " << endl;
         cin.ignore();
         getline(cin, img_output_string);
         img_output_path = img_output_string.c_str();
 
-        cout << "Absolute Path to GIF : " << endl;
-        cin.ignore();
+        cout << "Absolute Path to GIF          : " << endl;
         getline(cin, gif_string);
         gif_path = gif_string.c_str();
 
@@ -68,7 +72,11 @@ int main(){
         qt.setStatic(img, compressed_img, error_measurement_method, threshold, min_block_size, channels);
         
         auto start = high_resolution_clock::now();
-        qt.compressImage();
+        if(compression_pct == 0){
+            qt.compressImage();
+        } else{
+            qt.compressImageByFileSize(compression_pct, 0, 255, img_input_path, img_output_path);
+        }
         auto end = high_resolution_clock::now();
         auto exec_time = duration_cast<milliseconds>(end-start);
 
@@ -77,11 +85,11 @@ int main(){
         
         ifstream file(img_input_path, ios::binary | ios::ate);
         streamsize size = file.tellg();
-        input_file_size = static_cast<int>(size / 1024);
+        input_file_size = static_cast<float>(size / 1024);
         
         ifstream file2(img_output_path, ios::binary | ios::ate);
         size = file2.tellg();
-        output_file_size = static_cast<int>(size / 1024);
+        output_file_size = static_cast<float>(size / 1024);
 
         cout << endl;
         cout << "Execution Time (ms)   : " << exec_time.count() << endl;

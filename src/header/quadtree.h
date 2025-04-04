@@ -12,7 +12,7 @@ private:
     static int min_block_size;
     static int node_count;
     static int max_depth;
-    // static float compression_target; // [BONUS]
+    static float compression_target; // [BONUS]
 
     int depth;
     int x_idx;
@@ -54,6 +54,9 @@ public:
 
     float SSIM();
     float channelSSIM(int rgb);
+
+    void compressImageByFileSize(float compression_pct, float min, float max, const char* img_input_path, const char* img_output_path);
+    void setThreshold(float thresh);
 
     void setStatic(unsigned char* img, unsigned char* compressed_img, int error_measurement_method, float threshold, int min_size, int channel);
 
