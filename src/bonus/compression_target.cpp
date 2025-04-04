@@ -28,7 +28,7 @@ void QuadTree::compressImageByFileSize(float compression_pct, float min, float m
         size = file2.tellg();
         output_file_size = static_cast<float>(size / 1024);
 
-        current_pct = (input_file_size-output_file_size)/input_file_size*100;
+        current_pct = (input_file_size-output_file_size)/input_file_size;
         cout << i << " - " <<  this->threshold << " - " << current_pct << " - " << error_result << endl;
         if(abs(current_pct - compression_pct) < 0.01){
             return;
