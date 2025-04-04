@@ -36,7 +36,7 @@ public:
     void saveCompressedImagePNG(const char* path);
     
     // Bonus GIF
-    void generateGIF(const char* img_input_path, const char* img_output_path,  const char* saved_gif_path);
+    void generateGIF(const char* img_output_path,  const char* saved_gif_path);
     void fillFrames();
 
     float variance();

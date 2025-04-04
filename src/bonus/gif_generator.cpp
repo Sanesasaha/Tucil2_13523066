@@ -8,15 +8,15 @@ using namespace std;
 
 unsigned char** frames;
 
-void QuadTree::generateGIF(const char* img_input_path, const char* img_output_path,  const char* saved_gif_path){
+void QuadTree::generateGIF(const char* img_output_path,  const char* saved_gif_path){
     int w, h, channels;
     frames = new unsigned char*[max_depth];
 
     for(int i=0;i<max_depth;i++){
-        frames[i] = stbi_load(img_input_path, &w, &h, &channels, 4);
+        frames[i] = stbi_load(img_output_path, &w, &h, &channels, 4);
         if(frames[i] == nullptr) cout << "AAA";
     }
-
+    
     this->fillFrames();
 
     // generate GIF
@@ -45,9 +45,11 @@ void QuadTree::fillFrames(){
     for (int x = x_idx; x < x_idx+width;x++){
         for (int y = y_idx; y < y_idx+height; y++){
             pixel_index = (y * original_width + x) * channel;
-            frames[depth-1][pixel_index] = r_avg;
-            frames[depth-1][pixel_index+1] = g_avg;
-            frames[depth-1][pixel_index+2] = b_avg;
+            for(int d=depth-1;d<max_depth;d++){
+                frames[d][pixel_index] = r_avg;
+                frames[d][pixel_index+1] = g_avg;
+                frames[d][pixel_index+2] = b_avg;
+            }
         }
     }
     if(!is_leaf){
