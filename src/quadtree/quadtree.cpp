@@ -75,6 +75,11 @@ void QuadTree::compressImage(){
         if(error_result<=threshold){
             is_leaf = true;
         }
+    } else if(error_measurement_method==5){ // entropy
+        error_result = this->SSIM();
+        if(error_result<=threshold){
+            is_leaf = true;
+        }
     }
 
     if(!is_leaf){ // DIVIDE

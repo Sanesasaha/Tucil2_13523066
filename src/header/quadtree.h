@@ -52,7 +52,8 @@ public:
     float entropy();
     float channelEntropy(int rgb);
 
-    // float SSIM(); // [BONUS]
+    float SSIM();
+    float channelSSIM(int rgb);
 
     void setStatic(unsigned char* img, unsigned char* compressed_img, int error_measurement_method, float threshold, int min_size, int channel);
 
