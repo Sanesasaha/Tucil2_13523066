@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string>
 #include <chrono>
+#include <fstream>
 using namespace std;
 using namespace chrono;
 
@@ -21,6 +22,9 @@ int main(){
     int min_block_size;
     const char *img_output_path;
     string img_output_string;
+
+    const char *gif_path;
+    string gif_string;
 
     float input_file_size;
     float output_file_size;
@@ -51,6 +55,11 @@ int main(){
         getline(cin, img_output_string);
         img_output_path = img_output_string.c_str();
 
+        cout << "Absolute Path to GIF : " << endl;
+        cin.ignore();
+        getline(cin, gif_string);
+        gif_path = gif_string.c_str();
+
         // Compression
         img = stbi_load(img_input_path, &w, &h, &channels, 0);
         compressed_img = stbi_load(img_input_path, &w, &h, &channels, 0);
@@ -64,16 +73,24 @@ int main(){
         auto exec_time = duration_cast<milliseconds>(end-start);
 
         qt.saveCompressedImageJPG(img_output_path);
+        qt.generateGIF(img_output_path, gif_path);
         
+        ifstream file(img_input_path, ios::binary | ios::ate);
+        streamsize size = file.tellg();
+        input_file_size = static_cast<int>(size / 1024);
+        
+        ifstream file2(img_output_path, ios::binary | ios::ate);
+        size = file2.tellg();
+        output_file_size = static_cast<int>(size / 1024);
+
         cout << endl;
         cout << "Execution Time (ms)   : " << exec_time.count() << endl;
         cout << "Input File Size       : " << input_file_size << endl;
         cout << "Output File Size      : " << output_file_size << endl;
-        cout << "Compression Percentage: " << (output_file_size-input_file_size)/input_file_size << "%" << endl;
+        cout << "Compression Percentage: " << (input_file_size-output_file_size)/input_file_size*100 << "%" << endl;
         cout << "Tree Depth            : " << qt.getMaxDepth() << endl;
         cout << "Node Count            : " << qt.getNodeCount() << endl;
         
-        qt.generateGIF(img_input_path, img_output_path, "bin/img_output/bocchi.gif");
 
         cout << endl << "Continue?" << endl;
         cout << "(Input Y to continue, anything else to quit)" << endl;
