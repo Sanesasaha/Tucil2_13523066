@@ -14,17 +14,19 @@ bool validateImageFile(const char* filename){
     regex linux_absolute_path("^/.*\\.(jpg|jpeg|png)$");
 
     if(!(regex_match(filename, windows_absolute_path) || regex_match(filename, linux_absolute_path))){
-        cout << "Format file tidak valid!" << endl;
+        cout << "Format file gambar tidak valid!" << endl;
+        return false;
     }
     return true;
 }
 
 bool validateGIFFile(const char* filename){
-    regex windows_absolute_path("^[A-Za-z]:[\\/].*\\.gif$");
-    regex linux_absolute_path("^/.*\\.gif$");
+    regex windows_absolute_path("^[A-Za-z]:[\\/].*\\.(gif)$");
+    regex linux_absolute_path("^/.*\\.(gif)$");
 
     if(!(regex_match(filename, windows_absolute_path) || regex_match(filename, linux_absolute_path))){
-        cout << "Format file tidak valid!" << endl;
+        cout << "Format file GIF tidak valid!" << endl;
+        return false;
     }
     return true;
 }
@@ -42,14 +44,18 @@ bool inputPathExist(const char* filename){
 
 bool validateErrorMethod(int emm){
     if(emm<1 || emm>5){
-        cout << "Harap masukkan angka dalam rentang 1-5" << endl;
+        cout << "Harap masukkan angka dalam rentang 1-5 untuk metode pengukuran error" << endl;
         return false;
     } 
     return true;
 }
 
-bool validateThreshold(int emm, float thresh){
+bool validateThreshold(int emm, float thresh, float pct){
     // TODO: CEK
+    if(pct>0 && pct<=1){
+        return true;
+    }
+
     if(!validateErrorMethod) return false;
     if(emm==1){
         if(thresh>=0 && thresh<=16256.25){
@@ -82,7 +88,11 @@ bool validateThreshold(int emm, float thresh){
     }
 }
 
-bool validateMinBlockSize(const char* filename, int mbs){
+bool validateMinBlockSize(const char* filename, int mbs, float pct){
+    if(pct>0 && pct<=1){
+        return true;
+    }
+
     if(!inputPathExist(filename)) return false;
     int w, h, channels;
     unsigned char* img = stbi_load(filename, &w, &h, &channels, 0);
@@ -136,14 +146,14 @@ bool validateGIFPath(const char* input_filename, const char* filename){
 bool InputData::validate(){
     bool isValid = true;
     cout << endl;
-    isValid = isValid && validateImageFile(img_input_path);
-    isValid = isValid && inputPathExist(img_input_path);
-    isValid = isValid && validateErrorMethod(error_measurement_method);
-    isValid = isValid && validateThreshold(error_measurement_method, threshold);
-    isValid = isValid && validateMinBlockSize(img_input_path, min_block_size);
-    isValid = isValid && validateCompressionPct(compression_pct);
-    isValid = isValid && validateOutputPath(img_input_path, img_output_path);
-    isValid = isValid && validateGIFPath(img_input_path, img_output_path);
+    isValid = isValid & validateImageFile(img_input_path);
+    isValid = isValid & inputPathExist(img_input_path);
+    isValid = isValid & validateErrorMethod(error_measurement_method);
+    isValid = isValid & validateThreshold(error_measurement_method, threshold, compression_pct);
+    isValid = isValid & validateMinBlockSize(img_input_path, min_block_size, compression_pct);
+    isValid = isValid & validateCompressionPct(compression_pct);
+    isValid = isValid & validateOutputPath(img_input_path, img_output_path);
+    isValid = isValid & validateGIFPath(img_input_path, gif_path);
     cout << endl;
     return isValid;
 }
