@@ -83,7 +83,7 @@ int main(){
         cout << "Absolute Path to GIF          : " << endl;
         getline(cin, data.gif_string);
         data.gif_path = data.gif_string.c_str();
-
+        
         is_valid = data.validate();
         if(is_valid){
             cout << "Generating image ..." << endl;
@@ -104,7 +104,7 @@ int main(){
             auto exec_time = duration_cast<milliseconds>(end-start);
     
             cout << "Saving image ..." << endl;
-            qt.saveCompressedImageJPG(data.img_output_path);
+            qt.saveCompressedImage(data.img_output_path);
             cout << "Saving GIF ..." << endl;
             qt.generateGIF(data.img_output_path, data.gif_path);
             
@@ -120,7 +120,7 @@ int main(){
             cout << "Execution Time (ms)   : " << exec_time.count() << endl;
             cout << "Input File Size       : " << input_file_size << endl;
             cout << "Output File Size      : " << output_file_size << endl;
-            cout << "Compression Percentage: " << (input_file_size-output_file_size)/input_file_size*100 << "%" << endl;
+            cout << "Compression Percentage: " << qt.final_compression_pct*100 << "%" << endl;
             cout << "Tree Depth            : " << qt.getMaxDepth() << endl;
             cout << "Node Count            : " << qt.getNodeCount() << endl;
             

@@ -1,5 +1,7 @@
 #include "../header/quadtree.h"
 #include "../header/stb_image_write.h"
+#include <string>
+#include <regex>
 #include <iostream>
 using namespace std;
 
@@ -118,6 +120,15 @@ void QuadTree::compressImage(){
                 compressed_img[pixel_index+2] = b_avg;
             }
         }
+    }
+}
+
+void QuadTree::saveCompressedImage(const char* path){
+    regex path_png(".*\\.png$");
+    if(regex_match(path, path_png)){
+        saveCompressedImagePNG(path);
+    } else{
+        saveCompressedImageJPG(path);
     }
 }
 

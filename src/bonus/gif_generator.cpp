@@ -23,7 +23,7 @@ void QuadTree::generateGIF(const char* img_output_path,  const char* saved_gif_p
     // generate GIF
     GifWriter gif = {};
     if (!GifBegin(&gif, saved_gif_path, original_width, original_height, 100)) {
-        cout << "Failed to create GIF\n";
+        cout << "Failed to create GIF" << endl;;
         return;
     }
 
@@ -68,7 +68,7 @@ bool saveGIFTemplate(const char* input_filename, const char* filename){
     
     GifWriter gif = {};
     if (!GifBegin(&gif, filename, w, h, 100)) {
-        cout << "Path GIF tidak valid!" << endl;
+        cout << "Failed to create GIF" << endl;
         return false;
     }
     return true;
