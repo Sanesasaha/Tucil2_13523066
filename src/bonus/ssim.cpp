@@ -4,6 +4,8 @@
 #include <iostream>
 using namespace std;
 
+// Penurunan rumus tertera pada laporan
+
 float QuadTree::channelSSIM(int rgb){
     float C2 = pow(0.03*255, 2);
     return C2/(this->channelVariance(rgb)+C2);

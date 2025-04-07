@@ -32,6 +32,8 @@ float QuadTree::channelVariance(int rgb){
             sum_of_squared += pow(img[pixel_index + rgb], 2);
         }
     }
+    
+    // variansi = E(X^2) + (E(X))^2
     result = sum_of_squared/block_size - pow(avg/block_size, 2);
     return result;
 }

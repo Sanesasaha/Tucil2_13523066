@@ -13,14 +13,16 @@ void QuadTree::generateGIF(const char* img_output_path,  const char* saved_gif_p
     int w, h, channels;
     frames = new unsigned char*[max_depth];
 
+    // Generate setiap frame
     for(int i=0;i<max_depth;i++){
         frames[i] = stbi_load(img_output_path, &w, &h, &channels, 4);
         if(frames[i] == nullptr) cout << "AAA";
     }
     
+    // Isi setiap frame
     this->fillFrames();
 
-    // generate GIF
+    // Generate GIF
     GifWriter gif = {};
     if (!GifBegin(&gif, saved_gif_path, original_width, original_height, 100)) {
         cout << "Failed to create GIF" << endl;;
@@ -38,6 +40,8 @@ void QuadTree::generateGIF(const char* img_output_path,  const char* saved_gif_p
 }
 
 void QuadTree::fillFrames(){
+    // Untuk node pada depth tertentu, isi blok yang ditinjau oleh node pada frame ke-(depth-1) hingga depth terakhir
+    // dengan rerata dari pixel pada blok tersebut (frame dihitung dari 0)
     r_avg = this->channelAverage(0);
     g_avg = this->channelAverage(1);
     b_avg = this->channelAverage(2);
@@ -53,6 +57,7 @@ void QuadTree::fillFrames(){
             }
         }
     }
+    // telusuri seluruh child node
     if(!is_leaf){
         for(int i=0;i<4;i++){
             if(children[i] != nullptr){

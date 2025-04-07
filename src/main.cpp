@@ -145,6 +145,7 @@ int main(){
                 qt.final_compression_pct = (input_file_size - output_file_size)/input_file_size;
             }
             cout << endl;
+            cout << "[OUTPUT]" << endl;
             cout << "Execution Time (ms)   : " << exec_time.count() << endl;
             cout << "Input File Size       : " << input_file_size << endl;
             cout << "Output File Size      : " << output_file_size << endl;
@@ -161,7 +162,7 @@ int main(){
             }
         }
     }
-    
+
     cout << endl;
     cout << "Sampai jumpa di lain waktu! :D" << endl;
     return 0;

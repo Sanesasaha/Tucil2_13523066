@@ -29,8 +29,10 @@ private:
     float g_avg;
     float b_avg;
 public:
+    // Konstruktor
     QuadTree(int depth, int x_idx, int y_idx, int width, int height);
     
+    // Kompresi gambar
     void compressImage();
     void saveCompressedImage(const char* path);
     void saveCompressedImageJPG(const char* path);
@@ -40,6 +42,7 @@ public:
     void generateGIF(const char* img_output_path,  const char* saved_gif_path);
     void fillFrames();
 
+    // Error measurement methods
     float variance();
     float channelVariance(int rgb);
     float channelAverage(int rgb);
@@ -56,14 +59,17 @@ public:
     float SSIM();
     float channelSSIM(int rgb);
 
+    // Dynamic compression
     void compressImageByFileSize(float compression_pct, float min, float max, const char* img_input_path, const char* img_output_path);
     void setThreshold(float thresh);
     void setMinBlockSize(float mbs);
     void resetRelevantData(int depth, int node_count);
     float final_compression_pct;
 
+    // set static values
     void setStatic(unsigned char* img, unsigned char* compressed_img, int error_measurement_method, float threshold, int min_size, int channel);
 
+    // getters
     int getMaxDepth();
     int getNodeCount();
 };
