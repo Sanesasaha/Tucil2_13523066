@@ -24,12 +24,28 @@ int main(){
     bool is_valid = true;
     string cont;
     
+    cout << "====================================================================" << endl;
+    cout << "Selamat Datang di Program Quadtree Image Compression! :D" << endl;
+    cout << "Disusun oleh: Muhammad Ghifary Komara Putra (13523066)" << endl;
+    cout << "====================================================================" << endl << endl;
+
     while(run){
+        cout << "[INPUT]" << endl;
         InputData data;
-        // TODO: VALIDATION
+        
         cout << "Absolute Path to Image        : " << endl;
         getline(cin, data.img_input_string);
         data.img_input_path = data.img_input_string.c_str();
+        
+        cout << endl;
+        cout << "====================================================================" << endl;
+        cout << "Error measurement method:" << endl;
+        cout << "1. Variance" << endl;
+        cout << "2. Mean Absolute Deviation (MAD)" << endl;
+        cout << "3. Max Pixel Difference" << endl;
+        cout << "4. Entropy" << endl;
+        cout << "5. Structural simmilarity Index (SSIM)" << endl;
+        cout << "====================================================================" << endl << endl;
 
         cout << "Error Measurement Method      : ";
         cin >> data.error_measurement_method;
@@ -42,6 +58,15 @@ int main(){
             cin >> data.error_measurement_method;
         }
 
+
+        cout << "====================================================================" << endl;
+        cout << "Threshold (x)" << endl;
+        cout << "Variance                             : 0 <= x <= 16256.25" << endl;
+        cout << "Mean Absolute Deviation (MAD)        : 0 <= x <= 127.5" << endl;
+        cout << "Max Pixel Difference                 : 0 <= x <= 255" << endl;
+        cout << "Entropy                              : 0 <= x <= 8" << endl;
+        cout << "Structural simmilarity Index (SSIM)  : 0 <= x <= 1" << endl;
+        cout << "====================================================================" << endl << endl;
         cout << "Threshold                     : ";
         cin >> data.threshold;
         while(cin.fail()){
@@ -115,7 +140,10 @@ int main(){
             ifstream file2(data.img_output_path, ios::binary | ios::ate);
             size = file2.tellg();
             output_file_size = static_cast<float>(size / 1024);
-    
+            
+            if(data.compression_pct == 0){
+                qt.final_compression_pct = (input_file_size - output_file_size)/input_file_size;
+            }
             cout << endl;
             cout << "Execution Time (ms)   : " << exec_time.count() << endl;
             cout << "Input File Size       : " << input_file_size << endl;
@@ -133,6 +161,8 @@ int main(){
             }
         }
     }
-
+    
+    cout << endl;
+    cout << "Sampai jumpa di lain waktu! :D" << endl;
     return 0;
 }
