@@ -12,7 +12,7 @@ private:
     static int min_block_size;
     static int node_count;
     static int max_depth;
-    static float compression_target; // [BONUS]
+    static float compression_target;
 
     int depth;
     int x_idx;
@@ -32,6 +32,7 @@ public:
     QuadTree(int depth, int x_idx, int y_idx, int width, int height);
     
     void compressImage();
+    void saveCompressedImage(const char* path);
     void saveCompressedImageJPG(const char* path);
     void saveCompressedImagePNG(const char* path);
     
@@ -57,6 +58,9 @@ public:
 
     void compressImageByFileSize(float compression_pct, float min, float max, const char* img_input_path, const char* img_output_path);
     void setThreshold(float thresh);
+    void setMinBlockSize(float mbs);
+    void resetRelevantData(int depth, int node_count);
+    float final_compression_pct;
 
     void setStatic(unsigned char* img, unsigned char* compressed_img, int error_measurement_method, float threshold, int min_size, int channel);
 
