@@ -56,6 +56,7 @@ void QuadTree::setStatic(unsigned char* img, unsigned char* compressed_img, int 
 
 void QuadTree::compressImage(){
     is_leaf = false;
+    // basis: tinjau block size dan threshold
     if(block_size<=min_block_size){
         is_leaf = true;
     } else if(error_measurement_method==1){ // variance
@@ -85,7 +86,8 @@ void QuadTree::compressImage(){
         }
     }
 
-    if(!is_leaf){ // DIVIDE
+    // DIVIDE
+    if(!is_leaf){ 
         int width_increment = 0;
         int height_increment = 0;
         if(width%2==1) width_increment = 1;
@@ -103,9 +105,11 @@ void QuadTree::compressImage(){
         children[3] = new QuadTree(depth+1, x_idx + half_width, y_idx + half_height, half_width + width_increment, half_height + height_increment);
 
         for(int i=0;i<4;i++){
+            // DIVIDE
             if(children[i] != nullptr) children[i]->compressImage();
         }
     } else{ // CONQUER
+        // isi blok yang ditinjau dengan rerata channel r, g,  b
         r_avg = this->channelAverage(0);
         g_avg = this->channelAverage(1);
         b_avg = this->channelAverage(2);

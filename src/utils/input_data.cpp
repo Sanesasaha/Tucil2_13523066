@@ -51,7 +51,6 @@ bool validateErrorMethod(int emm){
 }
 
 bool validateThreshold(int emm, float thresh, float pct){
-    // TODO: CEK
     if(pct>0 && pct<=1){
         return true;
     }

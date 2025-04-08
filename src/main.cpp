@@ -123,7 +123,7 @@ int main(){
             if(data.compression_pct == 0){
                 qt.compressImage();
             } else{
-                qt.compressImageByFileSize(data.compression_pct, 0, 255, data.img_input_path, data.img_output_path);
+                qt.compressImageByFileSize(data.compression_pct, data.error_measurement_method, data.img_input_path, data.img_output_path);
             }
             auto end = high_resolution_clock::now();
             auto exec_time = duration_cast<milliseconds>(end-start);

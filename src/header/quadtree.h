@@ -60,7 +60,7 @@ public:
     float channelSSIM(int rgb);
 
     // Dynamic compression
-    void compressImageByFileSize(float compression_pct, float min, float max, const char* img_input_path, const char* img_output_path);
+    void compressImageByFileSize(float compression_pct, int emm, const char* img_input_path, const char* img_output_path);
     void setThreshold(float thresh);
     void setMinBlockSize(float mbs);
     void resetRelevantData(int depth, int node_count);
