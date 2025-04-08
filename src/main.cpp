@@ -129,7 +129,9 @@ int main(){
             auto exec_time = duration_cast<milliseconds>(end-start);
     
             cout << "Saving image ..." << endl;
-            qt.saveCompressedImage(data.img_output_path);
+            if(data.compression_pct == 0){
+                qt.saveCompressedImage(data.img_output_path);
+            }
             cout << "Saving GIF ..." << endl;
             qt.generateGIF(data.img_output_path, data.gif_path);
             

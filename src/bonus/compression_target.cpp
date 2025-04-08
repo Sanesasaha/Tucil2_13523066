@@ -61,7 +61,7 @@ void QuadTree::compressImageByFileSize(float compression_pct, int emm, const cha
 
         current_pct = (input_file_size-output_file_size)/input_file_size;
         final_compression_pct = current_pct;
-
+        
         // Evaluasi range binary search
         if(abs(current_pct - compression_pct) < 0.01){
             return;

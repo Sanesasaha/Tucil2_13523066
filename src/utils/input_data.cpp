@@ -121,6 +121,18 @@ bool validateOutputPath(const char* input_filename, const char* filename){
     unsigned char* img = stbi_load(input_filename, &w, &h, &channels, 0);
     
     regex path_png(".*\\.png$");
+    regex path_jpg(".*\\.jpg$");
+    regex path_jpeg(".*\\.jpeg$");
+    if(
+        !(regex_match(filename, path_png) && regex_match(input_filename, path_png) ||
+        regex_match(filename, path_jpg) && regex_match(input_filename, path_jpg) ||
+        regex_match(filename, path_jpeg) && regex_match(input_filename, path_jpeg)))
+        {
+            cout << "Ekstensi input dan output berbeda" << endl;
+            return false;
+        }
+
+    // mencoba save dan load gambar ke path output
     if(regex_match(filename, path_png)){
         stbi_write_png(filename, w, h, channels, img, w*channels);
     } else{

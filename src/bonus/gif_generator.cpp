@@ -3,6 +3,7 @@
 #include "../header/stb_image_write.h"
 #include "../header/gif.h"
 #include "../header/gif_generator.h"
+#include <regex>
 #include <cmath>
 #include <iostream>
 using namespace std;
@@ -29,8 +30,13 @@ void QuadTree::generateGIF(const char* img_output_path,  const char* saved_gif_p
         return;
     }
 
+    regex path_png(".*\\.png$");
     for(int i=0;i<max_depth;i++){
-        stbi_write_jpg(img_output_path, original_width, original_height, channel, frames[i], 75);
+        if(regex_match(img_output_path, path_png)){
+            stbi_write_png(img_output_path, width, height, channel, frames[i], width * channel);
+        } else{
+            stbi_write_jpg(img_output_path, width, height, channel, frames[i], 75);
+        }
         frames[i] = stbi_load(img_output_path, &w, &h, &channels, 4);
         GifWriteFrame(&gif, frames[i], original_width, original_height, 100);
     }
