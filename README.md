@@ -33,4 +33,6 @@ Program menerima masukan berikut:
 
 ### Credits
 Program menggunakan library stb_image.h dan stb_image_write.h untuk pembacaan dan penulisan file image. Library dapat diakses melalui tautan berikut: ```https://github.com/nothings/stb```
+
+
 Program juga menggunakan library gif.h karya Charlie Tangora untuk menggabungkan file gambar menjadi suatu file GIF. Library dapat diakses melalui tautan berikut: ```https://github.com/charlietangora/gif-h/blob/master/gif.h```
